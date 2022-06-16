@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.madtitan94.codengineapp.R
 import com.madtitan94.codengineapp.model.datamodel.Product
+import com.madtitan94.codengineapp.model.datamodel.User
 import com.madtitan94.codengineapp.utils.ProductCategory
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,12 @@ object TestRepository {
         Product(12,"Vanilla Ice cream",10.0,R.drawable.ice1.toString(),ProductCategory.ICECREAM.category),
         Product(13, "chocolate Ice cream", 10.0, R.drawable.ice2.toString(), ProductCategory.ICECREAM.category),
         Product(14,"Butterscotch Ice cream",10.0,R.drawable.ice3.toString(),ProductCategory.ICECREAM.category))
+    }
+
+    val Users by lazy {
+        listOf(
+            User(1, "Manager", "manager",1234 , R.drawable.manager.toString(),true),
+            User(2, "Server", "server",5678 , R.drawable.salesman.toString(),false))
     }
 
   }

@@ -12,13 +12,13 @@
             android:id="@+id/nav_transactions"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_transactions" />
-        <item
+        <!--<item
             android:id="@+id/nav_cart"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_cart" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_logout" />
+            android:title="@string/menu_logout" />-->
     </group>
 </menu>

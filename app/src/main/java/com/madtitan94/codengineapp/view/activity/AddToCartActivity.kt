@@ -16,6 +16,7 @@ import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
 import com.madtitan94.codengineapp.utils.CodeEngineApplication
+import com.madtitan94.codengineapp.utils.SharedPrefs
 import com.madtitan94.codengineapp.viewmodel.AddToCartActivityViewModel
 import com.madtitan94.codengineapp.viewmodel.AddToCartViewModelFactory
 import com.madtitan94.codengineapp.viewmodel.LandingViewModel
@@ -76,6 +77,10 @@ class AddToCartActivity : AppCompatActivity() {
         })
 
         binding.addItem.setOnClickListener {
+
+            if (SharedPrefs.isAdmin(this)){
+
+
             var oldQuantity = binding.quantity.text.toString().toInt()
 //            var newQuantity = oldQuantity+1
             makeLog("<==> ADD ITEM ONCLICK")
@@ -111,11 +116,22 @@ class AddToCartActivity : AppCompatActivity() {
             }
 
             }
+            }else{
+                Toast.makeText(this@AddToCartActivity,"Only Manager is allowed to take orders",Toast.LENGTH_SHORT).show();
+            }
         }
 
         binding.viewCart.setOnClickListener {
-            startActivity(Intent(this,ViewCart::class.java))
-            finish()
+            if (SharedPrefs.isAdmin(this)) {
+                //if (CartManager.orderProducts.value!!.size>0) {
+                    startActivity(Intent(this, ViewCart::class.java))
+                    finish()
+                /*}else{
+                    Toast.makeText(this@AddToCartActivity,"Please add Products in cart first",Toast.LENGTH_SHORT).show();
+                }*/
+            }else{
+                Toast.makeText(this@AddToCartActivity,"Only Manager is allowed to take orders",Toast.LENGTH_SHORT).show();
+            }
         }
 
         binding.increment.setOnClickListener {

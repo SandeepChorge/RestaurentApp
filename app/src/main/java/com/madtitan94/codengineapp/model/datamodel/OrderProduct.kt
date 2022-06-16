@@ -4,12 +4,14 @@ import androidx.room.Entity
 import androidx.room.FtsOptions
 import androidx.room.PrimaryKey
 import com.madtitan94.codengineapp.utils.CartManager
+import java.net.IDN
 import java.util.concurrent.TimeUnit
 
 @Entity
 data class OrderProduct(
-    @field:PrimaryKey(autoGenerate = true)
-    var id: Long,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+    var transactionId: Int,
     val productId: Int,
     val name: String,
     val price: Double,
@@ -27,7 +29,8 @@ data class OrderProduct(
             category = form.category,
                 quantity = 1,
                 totalTax = 0.0,//CartManager.calTax(form.price,1),
-                id = 1
+                transactionId = 0,
+                id = 0
             )
     }
 

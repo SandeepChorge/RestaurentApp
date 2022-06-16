@@ -5,17 +5,26 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.madtitan94.codengineapp.model.dao.OrderProductDao
 import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.model.dao.ProductDao
+import com.madtitan94.codengineapp.model.dao.TransactionDao
+import com.madtitan94.codengineapp.model.dao.UserDao
+import com.madtitan94.codengineapp.model.datamodel.OrderProduct
+import com.madtitan94.codengineapp.model.datamodel.Transaction
+import com.madtitan94.codengineapp.model.datamodel.User
 import com.madtitan94.codengineapp.model.repository.TestRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.chrono.HijrahChronology
 import java.time.chrono.HijrahChronology.INSTANCE
 
-@Database(entities = [Product::class],version = 1, exportSchema = false)
+@Database(entities = [Product::class,Transaction::class,OrderProduct::class, User::class],version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun productDao(): ProductDao
+    abstract fun orderProductDao(): OrderProductDao
+    abstract fun transactionDao(): TransactionDao
+    abstract fun userDao(): UserDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -34,6 +43,7 @@ abstract class AppDatabase: RoomDatabase() {
                     "app_database"
                 )
                     .addCallback(ProductDatabaseCallback(scope))
+                    .addCallback(UserDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -59,15 +69,29 @@ abstract class AppDatabase: RoomDatabase() {
         suspend fun populateDatabase(productDao: ProductDao) {
             // Delete all content here.
             productDao.deleteAll()
-
-            // Add sample words.
-            /*val prod = Product(1,"Normal Burger",10.0,"","burger")
-            productDao.insert(prod)
-            val prod2 = Product(2,"Cheese Burger",25.0,"","burger")
-            productDao.insert(prod2)*/
-
             productDao.insertAll(TestRepository.Products)
-            // TODO: Add your own words!
+
+        }
+    }
+
+    private class UserDatabaseCallback(
+        private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    populateDatabase(database.userDao())
+                }
+            }
+        }
+
+        suspend fun populateDatabase(userDao: UserDao) {
+            // Delete all content here.
+            userDao.deleteAll()
+            userDao.insertAll(TestRepository.Users)
+
         }
     }
 }

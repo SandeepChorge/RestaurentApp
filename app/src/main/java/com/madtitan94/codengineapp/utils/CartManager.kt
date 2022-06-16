@@ -1,21 +1,64 @@
 package com.madtitan94.codengineapp.utils
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.madtitan94.codengineapp.model.datamodel.CustomerDetails
 import com.madtitan94.codengineapp.model.datamodel.OrderProduct
+import com.madtitan94.codengineapp.model.datamodel.OrderTotalDetails
 import com.madtitan94.codengineapp.model.datamodel.Product
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 object CartManager {
 
     var customerDetails = CustomerDetails(firstName = "Guest",
     lastName = "",
     mobile = "",
-    email = "")
+    email = ""
+    )
+    var orderTotalDetails = OrderTotalDetails(
+        subTotal = "0",
+        totalTax = "0",
+        total = "0"
+    )
+
+    fun clear(){
+        CoroutineScope(Dispatchers.Default).launch{
+        val p: MutableList<OrderProduct> = ArrayList()
+        postToMLiveData(p)
+            customerDetails = CustomerDetails(firstName = "Guest",
+                lastName = "",
+                mobile = "",
+                email = ""
+            )
+             orderTotalDetails = OrderTotalDetails(
+                subTotal = "0",
+                totalTax = "0",
+                total = "0"
+            )
+        }
+    }
+
+
+    fun GetFormmatedDateTime(): String{
+    /*    val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+        val formatted = current.format(formatter)*/
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val currentDate = sdf.format(Date())
+        return currentDate
+    }
     fun getProductList(): LiveData<MutableList<OrderProduct>> {
         return orderProducts
     }

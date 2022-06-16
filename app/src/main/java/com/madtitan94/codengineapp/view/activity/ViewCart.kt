@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.madtitan94.codengineapp.R
 import com.madtitan94.codengineapp.databinding.ActivityViewCartBinding
 import com.madtitan94.codengineapp.model.datamodel.CustomerDetails
+import com.madtitan94.codengineapp.model.datamodel.OrderTotalDetails
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
 import com.madtitan94.codengineapp.utils.CodeEngineApplication
@@ -35,7 +36,9 @@ class ViewCart : AppCompatActivity(), OnQuantityModified {
         setContentView(binding.root)
 
         val viewmodel : ViewCartViewModel by viewModels {
-            ViewCartViewModelFactory((this.application as CodeEngineApplication).prodRepository)
+            ViewCartViewModelFactory((this.application as CodeEngineApplication).prodRepository,
+                (this.application as CodeEngineApplication).orderProdRepository,
+                (this.application as CodeEngineApplication).transactionRepository)
         }
 
         //viewmodel.getProductList().observe(this, Observer {  })
@@ -96,6 +99,9 @@ class ViewCart : AppCompatActivity(), OnQuantityModified {
                         binding.SubTotalValue.text =  total.toString();
                         binding.TaxValue.text =  totalTax.toString();
                         binding.totalCost.text = (CartManager.GetFormattedDouble((totalTax+total))).toString()
+                        CartManager.orderTotalDetails = OrderTotalDetails(subTotal = total.toString(),
+                        totalTax = totalTax.toString(),
+                        total = (CartManager.GetFormattedDouble((totalTax+total))).toString())
                     }
                 }
 
@@ -147,7 +153,20 @@ class ViewCart : AppCompatActivity(), OnQuantityModified {
 
 
         binding.confirm.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
 
+                if(CartManager.orderProducts.value!!.size>0) {
+                    viewmodel.confirmOrder()
+                    withContext(Dispatchers.Main) {
+                        makeLog("Done with Insertion")
+                        finish()
+                    }
+                }else{
+                    CoroutineScope(Dispatchers.Main).launch {
+                        Toast.makeText(this@ViewCart,"Product needs to be added in cart",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
