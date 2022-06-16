@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="cart_icon_height">40dp</dimen>
+    <dimen name="cart_icon_width">40dp</dimen>
+
+    <dimen name="cart_text">18sp</dimen>
+
+    <dimen name="mar_8_dp">8dp</dimen>
+</resources>

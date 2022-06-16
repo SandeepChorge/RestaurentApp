@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.AddToCartActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/food_background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+        <androidx.cardview.widget.CardView
+            android:background="@color/black"
+            android:layout_margin="8dp"
+
+            app:cardCornerRadius="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/image"
+                    android:src="@drawable/burger1"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/name"
+                    android:text="Mac and Cheese Burger"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    />
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/decrement"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="-"
+                        android:padding="0dp"
+                        android:textStyle="bold"
+                        android:textSize="25sp"/>
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="1"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:gravity="center"
+                        android:textSize="22sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+                    <Button
+                        android:id="@+id/increment"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+"
+                        android:padding="0dp"
+                        android:textStyle="bold"
+                        android:textSize="25sp"/>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+        <RelativeLayout
+            android:background="#C789EC"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp">
+
+            <Button
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:id="@+id/addItem"
+                />
+
+            <Button
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Cart"
+                android:id="@+id/viewCart"
+                />
+
+           <!-- <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/totlLabel"
+                android:layout_alignParentEnd="true"
+                android:text="Total is"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total"
+                android:layout_alignParentEnd="true"
+                android:text="110  Rs"
+                android:layout_below="@id/totlLabel"
+                android:textColor="@color/black"
+
+                android:gravity="center"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-medium"/>
+-->
+
+        </RelativeLayout>
+    </FrameLayout>
+
+
+
+</LinearLayout>
+
+</layout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_landing">
+
+    <fragment
+        android:id="@+id/nav_landing"
+        android:name="com.madtitan94.codengineapp.view.fragments.LandingFragment"
+        android:label="@string/menu_landing"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_transactions"
+        android:name="com.madtitan94.codengineapp.view.fragments.TransactionsFragment"
+        android:label="@string/menu_transactions"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.madtitan94.codengineapp.view.fragments.SlideshowFragment"
+        android:label="@string/menu_cart"
+        tools:layout="@layout/fragment_slideshow" />
+   <!-- <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.madtitan94.codengineapp.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_cart"
+        tools:layout="@layout/fragment_slideshow" />-->
+</navigation>

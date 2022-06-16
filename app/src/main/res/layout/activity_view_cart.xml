@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".view.activity.ViewCart">
+
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order For"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GUEST"
+            android:textColor="@color/black"
+            android:layout_margin="10dp"
+            android:id="@+id/customerName"
+            android:gravity="start"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif-condensed"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/footerView"
+        android:layout_below="@id/headerView"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/cart_item" />
+
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/footerView"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="vertical"
+        android:background="#C789EC">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SubTotal"
+            android:textColor="@color/black"
+            android:layout_alignParentStart="true"
+            android:text="Sub Total"
+            />
+
+        <TextView
+            android:layout_below="@id/SubTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Tax"
+
+            android:textColor="@color/black"
+            android:layout_alignParentStart="true"
+            android:text="Tax"
+            />
+
+        <TextView
+            android:layout_below="@id/Tax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Total"
+            android:textColor="@color/black"
+            android:layout_alignParentStart="true"
+            android:text="Total"
+            />
+
+        <TextView
+            android:layout_toEndOf="@id/SubTotal"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SubTotalValue"
+
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"
+
+            android:text="Sub Total"
+            />
+
+        <TextView
+            android:layout_toEndOf="@id/SubTotal"
+            android:gravity="end"
+            android:layout_below="@id/SubTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TaxValue"
+
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"
+            android:text="Tax"
+            />
+
+        <TextView
+            android:id="@+id/totalCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TaxValue"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@id/SubTotal"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:text="1000"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm and Pay"
+            android:id="@+id/confirm"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GO TO"
+            android:id="@+id/Goto"
+            android:layout_toEndOf="@id/confirm"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>
+</layout>
