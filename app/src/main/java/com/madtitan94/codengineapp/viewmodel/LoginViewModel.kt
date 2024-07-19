@@ -8,6 +8,7 @@ import com.madtitan94.codengineapp.model.repository.ProductRepository
 import com.madtitan94.codengineapp.model.repository.UserRepository
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
 import com.madtitan94.codengineapp.utils.ProductCategory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,8 +16,10 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel (private val repository: UserRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
     private val matchingUSer = MediatorLiveData<List<User>>()
 
     fun MatchingUSer(): LiveData<List<User>> {
@@ -31,6 +34,7 @@ class LoginViewModel (private val repository: UserRepository) : ViewModel() {
         }
 
 }
+/*
 class LoginViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -40,4 +44,4 @@ class LoginViewModelFactory(private val repository: UserRepository) :
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

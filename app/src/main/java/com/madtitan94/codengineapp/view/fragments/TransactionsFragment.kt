@@ -4,22 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.madtitan94.codengineapp.databinding.FragmentGalleryBinding
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
-import com.madtitan94.codengineapp.utils.CodeEngineApplication
-import com.madtitan94.codengineapp.view.adapters.ProductsAdapter
 import com.madtitan94.codengineapp.view.adapters.TransactionsAdapter
-import com.madtitan94.codengineapp.viewmodel.LandingViewModel
-import com.madtitan94.codengineapp.viewmodel.LandingViewModelFactory
-import com.madtitan94.codengineapp.viewmodel.TransactionViewModelFactory
 import com.madtitan94.codengineapp.viewmodel.TransactionsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TransactionsFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
@@ -36,9 +31,10 @@ class TransactionsFragment : Fragment() {
         /*val transactionsViewModel =
             ViewModelProvider(this).get(TransactionsViewModel::class.java)
 */
-        val transactionsViewModel : TransactionsViewModel by viewModels {
+        val transactionsViewModel : TransactionsViewModel by viewModels ()
+        /*val transactionsViewModel : TransactionsViewModel by viewModels {
             TransactionViewModelFactory((activity?.application as CodeEngineApplication).transactionRepository)
-        }
+        }*/
 
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -54,7 +50,7 @@ class TransactionsFragment : Fragment() {
             textView.text = it
         }*/
 
-        transactionsViewModel.getTransactions().observe(this, Observer {trans->
+        transactionsViewModel.getTransactions().observe(viewLifecycleOwner, Observer {trans->
             makeLog("Total TRansction Size is "+trans.size)
             trans?.let { adapter.submitList(trans) }
         })

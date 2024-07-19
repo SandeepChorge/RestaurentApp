@@ -6,16 +6,18 @@ import com.madtitan94.codengineapp.model.repository.OrderProductRepository
 import com.madtitan94.codengineapp.model.repository.ProductRepository
 import com.madtitan94.codengineapp.model.repository.TransactionRepository
 import com.madtitan94.codengineapp.model.repository.UserRepository
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
+@HiltAndroidApp
 public class CodeEngineApplication :Application() {
 
+    /*
     val applicationScope = CoroutineScope(SupervisorJob())
-
     val database by lazy { AppDatabase.getDatabase(this,applicationScope) }
     val prodRepository by lazy { ProductRepository(database.productDao()) }
     val orderProdRepository by lazy { OrderProductRepository(database.orderProductDao()) }
     val transactionRepository by lazy { TransactionRepository(database.transactionDao()) }
-    val userRepository by lazy { UserRepository(database.userDao())}
+    val userRepository by lazy { UserRepository(database.userDao())}*/
 }

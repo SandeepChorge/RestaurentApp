@@ -12,11 +12,14 @@ import com.madtitan94.codengineapp.model.repository.TransactionRepository
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
 import com.madtitan94.codengineapp.utils.ProductCategory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ViewCartViewModel(private val repository: ProductRepository,
+@HiltViewModel
+class ViewCartViewModel @Inject constructor(private val repository: ProductRepository,
                         private val orderProductRepo: OrderProductRepository,
                         private val transactionRepo: TransactionRepository) : ViewModel() {
      suspend fun confirmOrder() {
@@ -63,6 +66,7 @@ class ViewCartViewModel(private val repository: ProductRepository,
 
 }
 
+/*
 class ViewCartViewModelFactory(private val repository: ProductRepository,
                                private val orderProductRepo: OrderProductRepository,
                                private val transactionRepo: TransactionRepository) :
@@ -74,4 +78,4 @@ class ViewCartViewModelFactory(private val repository: ProductRepository,
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

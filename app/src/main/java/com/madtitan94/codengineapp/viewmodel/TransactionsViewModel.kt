@@ -6,11 +6,14 @@ import com.madtitan94.codengineapp.model.datamodel.Transaction
 import com.madtitan94.codengineapp.model.repository.ProductRepository
 import com.madtitan94.codengineapp.model.repository.TransactionRepository
 import com.madtitan94.codengineapp.utils.ProductCategory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TransactionsViewModel(private val repository: TransactionRepository) : ViewModel() {
+@HiltViewModel
+class TransactionsViewModel @Inject constructor(private val repository: TransactionRepository) : ViewModel() {
 
    /* private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"
@@ -36,7 +39,7 @@ class TransactionsViewModel(private val repository: TransactionRepository) : Vie
     }
 
 }
-
+/*
 class TransactionViewModelFactory(private val repository: TransactionRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -46,4 +49,4 @@ class TransactionViewModelFactory(private val repository: TransactionRepository)
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

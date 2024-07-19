@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.madtitan94.codengineapp.databinding.FragmentSlideshowBinding
 import com.madtitan94.codengineapp.viewmodel.SlideshowViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SlideshowFragment : Fragment() {
 
     private var _binding: FragmentSlideshowBinding? = null

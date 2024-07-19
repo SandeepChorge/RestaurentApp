@@ -1,33 +1,25 @@
 package com.madtitan94.codengineapp.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.madtitan94.codengineapp.R
 import com.madtitan94.codengineapp.databinding.ActivityAddToCartBinding
-import com.madtitan94.codengineapp.databinding.ActivityMainBinding
-import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
-import com.madtitan94.codengineapp.utils.CodeEngineApplication
 import com.madtitan94.codengineapp.utils.SharedPrefs
 import com.madtitan94.codengineapp.viewmodel.AddToCartActivityViewModel
-import com.madtitan94.codengineapp.viewmodel.AddToCartViewModelFactory
-import com.madtitan94.codengineapp.viewmodel.LandingViewModel
-import com.madtitan94.codengineapp.viewmodel.LandingViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.random.Random
 
+@AndroidEntryPoint
 class AddToCartActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddToCartBinding
@@ -40,10 +32,10 @@ class AddToCartActivity : AppCompatActivity() {
         binding = ActivityAddToCartBinding.inflate(layoutInflater)
         binding.setLifecycleOwner(this)
         setContentView(binding.root)
-
-        val addtoCartViewModel : AddToCartActivityViewModel by viewModels {
+        val addtoCartViewModel : AddToCartActivityViewModel by viewModels()
+        /*val addtoCartViewModel : AddToCartActivityViewModel by viewModels {
             AddToCartViewModelFactory((this.application as CodeEngineApplication).prodRepository)
-        }
+        }*/
         val bundle = intent.extras
         if (bundle!=null ){
             val productId = bundle.getInt("productId",0)

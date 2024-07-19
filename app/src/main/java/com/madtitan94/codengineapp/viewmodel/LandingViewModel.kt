@@ -5,13 +5,15 @@ import androidx.lifecycle.*
 import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.model.repository.ProductRepository
 import com.madtitan94.codengineapp.utils.ProductCategory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class LandingViewModel(private val repository: ProductRepository) : ViewModel() {
+@HiltViewModel
+class LandingViewModel @Inject constructor(private val repository: ProductRepository) : ViewModel() {
 
     private val productList = MediatorLiveData<List<Product>>()
 
@@ -38,7 +40,7 @@ class LandingViewModel(private val repository: ProductRepository) : ViewModel() 
     val text: LiveData<String> = _text
 */
 }
-    class LandingViewModelFactory(private val repository: ProductRepository) :
+  /*  class LandingViewModelFactory(private val repository: ProductRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LandingViewModel::class.java)) {
@@ -48,3 +50,4 @@ class LandingViewModel(private val repository: ProductRepository) : ViewModel() 
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+*/

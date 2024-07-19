@@ -6,8 +6,9 @@ import com.madtitan94.codengineapp.model.dao.TransactionDao
 import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.model.datamodel.Transaction
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TransactionRepository (private val transactionDao: TransactionDao) {
+class TransactionRepository @Inject constructor(private val transactionDao: TransactionDao) {
 
     suspend fun getAllTransactions(): Flow<List<Transaction>> {
         return transactionDao.getAllTransactions()

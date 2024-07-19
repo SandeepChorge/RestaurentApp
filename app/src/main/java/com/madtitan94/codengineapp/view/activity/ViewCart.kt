@@ -1,6 +1,5 @@
 package com.madtitan94.codengineapp.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madtitan94.codengineapp.R
@@ -16,16 +16,16 @@ import com.madtitan94.codengineapp.model.datamodel.CustomerDetails
 import com.madtitan94.codengineapp.model.datamodel.OrderTotalDetails
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
-import com.madtitan94.codengineapp.utils.CodeEngineApplication
 import com.madtitan94.codengineapp.view.adapters.CartAdapter
 import com.madtitan94.codengineapp.view.adapters.OnQuantityModified
-import com.madtitan94.codengineapp.view.adapters.ProductsAdapter
-import com.madtitan94.codengineapp.viewmodel.AddToCartActivityViewModel
-import com.madtitan94.codengineapp.viewmodel.AddToCartViewModelFactory
 import com.madtitan94.codengineapp.viewmodel.ViewCartViewModel
-import com.madtitan94.codengineapp.viewmodel.ViewCartViewModelFactory
-import kotlinx.coroutines.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class ViewCart : AppCompatActivity(), OnQuantityModified {
     private lateinit var  binding : ActivityViewCartBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,12 @@ class ViewCart : AppCompatActivity(), OnQuantityModified {
         binding.setLifecycleOwner(this)
         setContentView(binding.root)
 
-        val viewmodel : ViewCartViewModel by viewModels {
+        val viewmodel : ViewCartViewModel by viewModels ()
+        /*val viewmodel : ViewCartViewModel by viewModels {
             ViewCartViewModelFactory((this.application as CodeEngineApplication).prodRepository,
                 (this.application as CodeEngineApplication).orderProdRepository,
                 (this.application as CodeEngineApplication).transactionRepository)
-        }
+        }*/
 
         //viewmodel.getProductList().observe(this, Observer {  })
 

@@ -19,7 +19,9 @@ import com.madtitan94.codengineapp.databinding.ActivityMainBinding
 import com.madtitan94.codengineapp.databinding.NavHeaderMainBinding
 import com.madtitan94.codengineapp.utils.CartManager
 import com.madtitan94.codengineapp.utils.SharedPrefs
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

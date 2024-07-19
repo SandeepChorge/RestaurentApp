@@ -4,9 +4,12 @@ import androidx.lifecycle.*
 import com.madtitan94.codengineapp.model.datamodel.Product
 import com.madtitan94.codengineapp.model.repository.ProductRepository
 import com.madtitan94.codengineapp.utils.ProductCategory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class AddToCartActivityViewModel(private val repository: ProductRepository) : ViewModel() {
+@HiltViewModel
+class AddToCartActivityViewModel @Inject constructor(private val repository: ProductRepository) : ViewModel() {
 
     public val product = MediatorLiveData<Product>()
 
@@ -30,6 +33,7 @@ class AddToCartActivityViewModel(private val repository: ProductRepository) : Vi
     }
 
 }
+/*
 
 class AddToCartViewModelFactory(private val repository: ProductRepository) :
     ViewModelProvider.Factory {
@@ -40,4 +44,4 @@ class AddToCartViewModelFactory(private val repository: ProductRepository) :
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}*/

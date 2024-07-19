@@ -1,27 +1,21 @@
 package com.madtitan94.codengineapp.view.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.madtitan94.codengineapp.R
 import com.madtitan94.codengineapp.databinding.ActivityLogin2Binding
-import com.madtitan94.codengineapp.databinding.ActivityMainBinding
 import com.madtitan94.codengineapp.utils.CartManager.makeLog
-import com.madtitan94.codengineapp.utils.CodeEngineApplication
 import com.madtitan94.codengineapp.utils.SharedPrefs
-import com.madtitan94.codengineapp.viewmodel.LandingViewModel
-import com.madtitan94.codengineapp.viewmodel.LandingViewModelFactory
 import com.madtitan94.codengineapp.viewmodel.LoginViewModel
-import com.madtitan94.codengineapp.viewmodel.LoginViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLogin2Binding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +24,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLogin2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewmodel : LoginViewModel by viewModels {
+        val viewmodel : LoginViewModel by viewModels ()
+        /*val viewmodel : LoginViewModel by viewModels {
             LoginViewModelFactory((this?.application as CodeEngineApplication).userRepository)
-        }
+        }*/
 
         viewmodel.MatchingUSer().observe(this, Observer {
             if (!it.isEmpty()) {

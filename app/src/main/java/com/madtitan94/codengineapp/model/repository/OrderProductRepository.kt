@@ -6,8 +6,9 @@ import com.madtitan94.codengineapp.model.dao.ProductDao
 import com.madtitan94.codengineapp.model.datamodel.OrderProduct
 import com.madtitan94.codengineapp.model.datamodel.Product
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class OrderProductRepository(private val orderProductDao: OrderProductDao) {
+class OrderProductRepository @Inject constructor(private val orderProductDao: OrderProductDao) {
 
     fun getOrderProductByTransactionID(transactionID: String): Flow<List<OrderProduct>> {
         return orderProductDao.getOrderProductByTransactionID(transactionID)
