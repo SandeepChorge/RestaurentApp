@@ -15,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LandingViewModel @Inject constructor(private val repository: ProductRepository) : ViewModel() {
 
-    private val productList = MediatorLiveData<List<Product>>()
+    //private val productList = MediatorLiveData<List<Product>>()
+    private lateinit var productList : LiveData<List<Product>>
 
     fun getProductList(): LiveData<List<Product>> {
         return productList
@@ -26,28 +27,11 @@ class LandingViewModel @Inject constructor(private val repository: ProductReposi
     }
 
     fun getProductByCategory(category: String) {
-        productList.addSource(repository.getProds(category).asLiveData()){
+        /*productList.addSource(repository.getProds(category).asLiveData()){
             peoples -> productList.postValue(peoples)
-        }
+        }*/
+        productList = repository.getProds(category).asLiveData()
     }
 
-    suspend fun <T> Flow<List<T>>.flattenToList() =
-        flatMapConcat { it.asFlow() }.toList()
 
-    /*private val _text = MutableLiveData<String>().apply {
-        value = ProductCategory.BURGER.category
-    }
-    val text: LiveData<String> = _text
-*/
 }
-  /*  class LandingViewModelFactory(private val repository: ProductRepository) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LandingViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return LandingViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
-*/

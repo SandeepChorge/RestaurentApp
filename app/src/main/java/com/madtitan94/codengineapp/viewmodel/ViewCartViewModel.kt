@@ -19,19 +19,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewCartViewModel @Inject constructor(private val repository: ProductRepository,
-                        private val orderProductRepo: OrderProductRepository,
-                        private val transactionRepo: TransactionRepository) : ViewModel() {
-     suspend fun confirmOrder() {
+class ViewCartViewModel @Inject constructor(
+    private val repository: ProductRepository,
+    private val orderProductRepo: OrderProductRepository,
+    private val transactionRepo: TransactionRepository
+) : ViewModel() {
+    suspend fun confirmOrder() {
 
-            var transactionId = transactionRepo.getMaxTransactionId()
-            if (transactionId<0){
-               transactionId = 1;
-            }else{
-                transactionId = transactionId+1
-            }
+        var transactionId = transactionRepo.getMaxTransactionId()
+        if (transactionId < 0) {
+            transactionId = 1;
+        } else {
+            transactionId += 1
+        }
 
-            var transaction = Transaction(
+        var transaction = Transaction(
             transactionId,
             "#00$transactionId",
             CartManager.orderTotalDetails.subTotal.toDouble(),
@@ -43,39 +45,24 @@ class ViewCartViewModel @Inject constructor(private val repository: ProductRepos
             CartManager.customerDetails.lastName,
             CartManager.customerDetails.mobile,
             CartManager.customerDetails.email
-            )
+        )
 
-            var res = transactionRepo.insert(transaction)
-            makeLog("TRANSACTION INSERT LOG IS "+res)
+        var res = transactionRepo.insert(transaction)
+        makeLog("TRANSACTION INSERT LOG IS $res")
 
-            var updatedTransactionId = transactionRepo.getMaxTransactionId()
+        var updatedTransactionId = transactionRepo.getMaxTransactionId()
 
-         val odList: MutableList<OrderProduct> = ArrayList()
-            CartManager.orderProducts.value?.forEach { orderProduct ->
-                orderProduct.transactionId = updatedTransactionId
-                odList.add(orderProduct)
-            }
-
-                var res2 = orderProductRepo.insertAll(odList)
-
-            makeLog("Inserted order products "+res2)
-
-         CartManager.clear()
-
-    }
-
-}
-
-/*
-class ViewCartViewModelFactory(private val repository: ProductRepository,
-                               private val orderProductRepo: OrderProductRepository,
-                               private val transactionRepo: TransactionRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ViewCartViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return ViewCartViewModel(repository,orderProductRepo,transactionRepo) as T
+        val odList: MutableList<OrderProduct> = ArrayList()
+        CartManager.orderProducts.value?.forEach { orderProduct ->
+            orderProduct.transactionId = updatedTransactionId
+            odList.add(orderProduct)
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+
+        var res2 = orderProductRepo.insertAll(odList)
+
+        makeLog("Inserted order products $res2")
+
+        CartManager.clear()
+
     }
-}*/
+}

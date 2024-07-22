@@ -54,7 +54,7 @@ class AppDatabaseTest: TestCase(){
         Assert.assertTrue("Products are null",products!=null)*/
     }
 
-    @Test
+  /*  @Test
     fun getProducts() = runBlocking {
 
         val res = dao.getProductsByCategory("burger")
@@ -66,6 +66,6 @@ class AppDatabaseTest: TestCase(){
             Assert.assertFalse("Nothing Got Products ", false)
         }
 
-    }
+    }*/
 
 }

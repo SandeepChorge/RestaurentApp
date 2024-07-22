@@ -11,16 +11,17 @@ import javax.inject.Inject
 @HiltViewModel
 class AddToCartActivityViewModel @Inject constructor(private val repository: ProductRepository) : ViewModel() {
 
-    public val product = MediatorLiveData<Product>()
+    private lateinit var  product : LiveData<Product>
 
     fun getProductLiveData(): LiveData<Product> {
         return product
     }
 
     fun getProductDetails(id: Int){
-        product.addSource(repository.getProductByID(id).asLiveData()){
+       product = repository.getProductByID(id).asLiveData()
+        /* product.addSource(repository.getProductByID(id).asLiveData()){
                 p -> product.postValue(p)
-        }
+        }*/
     }
 
     private val _prodQuantity = MutableLiveData<Int>().apply {
@@ -33,15 +34,4 @@ class AddToCartActivityViewModel @Inject constructor(private val repository: Pro
     }
 
 }
-/*
 
-class AddToCartViewModelFactory(private val repository: ProductRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddToCartActivityViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return AddToCartActivityViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}*/

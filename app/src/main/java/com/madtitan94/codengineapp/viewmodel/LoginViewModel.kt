@@ -20,28 +20,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
-    private val matchingUSer = MediatorLiveData<List<User>>()
+    private lateinit var matchingUSer : LiveData<List<User>>
 
-    fun MatchingUSer(): LiveData<List<User>> {
+    fun matchingUSer(): LiveData<List<User>> {
         return matchingUSer
     }
 
-    fun login(username:String, password: String) {
-
-        matchingUSer.addSource(repository.login(username,password).asLiveData()){
-                s -> matchingUSer.postValue(s)
-        }
-        }
+    fun login(username: String, password: String) {
+        matchingUSer = repository.login(username, password).asLiveData();
+    }
 
 }
-/*
-class LoginViewModelFactory(private val repository: UserRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return LoginViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}*/

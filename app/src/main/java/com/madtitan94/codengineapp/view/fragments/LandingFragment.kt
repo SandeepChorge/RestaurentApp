@@ -54,7 +54,7 @@ class LandingFragment : Fragment() {
 
 
 
-        landingViewModel.getProductList().observe(this, Observer { products ->
+        landingViewModel.getProductList().observe(viewLifecycleOwner, Observer { products ->
             //Log.e("PRODUCTS ARE ","--"+products?.size)
             products?.let { adapter.submitList(it) }
         })

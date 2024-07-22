@@ -29,8 +29,8 @@ class LoginActivity : AppCompatActivity() {
             LoginViewModelFactory((this?.application as CodeEngineApplication).userRepository)
         }*/
 
-        viewmodel.MatchingUSer().observe(this, Observer {
-            if (!it.isEmpty()) {
+        viewmodel.matchingUSer().observe(this, Observer {
+            if (it.isNotEmpty()) {
                     makeLog("IN RES TRUE")
                     CoroutineScope(Dispatchers.Main).launch{
                         makeLog("SHOULD CALL NEW ACTIVITY")

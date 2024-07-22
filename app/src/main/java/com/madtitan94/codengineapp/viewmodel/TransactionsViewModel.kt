@@ -9,18 +9,15 @@ import com.madtitan94.codengineapp.utils.ProductCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TransactionsViewModel @Inject constructor(private val repository: TransactionRepository) : ViewModel() {
+class TransactionsViewModel @Inject constructor(private val repository: TransactionRepository) :
+    ViewModel() {
 
-   /* private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
-    }
-    val text: LiveData<String> = _text*/
-
-    private val _transactionsList = MediatorLiveData<List<Transaction>>()
+    private lateinit var _transactionsList: LiveData<List<Transaction>>
 
     fun getTransactions(): LiveData<List<Transaction>> {
         return _transactionsList
@@ -30,23 +27,8 @@ class TransactionsViewModel @Inject constructor(private val repository: Transact
         getAllTransactions()
     }
 
-    fun getAllTransactions() {
-        CoroutineScope(Dispatchers.Main).launch {
-        _transactionsList.addSource(repository.getAllTransactions().asLiveData()){
-                tran -> _transactionsList.postValue(tran)
-        }
-        }
+    private fun getAllTransactions() = viewModelScope.launch {
+        _transactionsList = repository.getAllTransactions().asLiveData()
     }
 
 }
-/*
-class TransactionViewModelFactory(private val repository: TransactionRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TransactionsViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return TransactionsViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}*/
