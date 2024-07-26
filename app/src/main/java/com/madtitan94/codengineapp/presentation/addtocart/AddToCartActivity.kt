@@ -1,0 +1,178 @@
+package com.madtitan94.codengineapp.presentation.addtocart
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import com.madtitan94.codengineapp.databinding.ActivityAddToCartBinding
+import com.madtitan94.codengineapp.presentation.utils.CartManager
+import com.madtitan94.codengineapp.presentation.utils.CartManager.makeLog
+import com.madtitan94.codengineapp.presentation.utils.SharedPrefs
+import com.madtitan94.codengineapp.presentation.viewcart.ViewCart
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+@AndroidEntryPoint
+class AddToCartActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAddToCartBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //setContentView(R.layout.activity_add_to_cart)
+
+        binding = ActivityAddToCartBinding.inflate(layoutInflater)
+        binding.setLifecycleOwner(this)
+        setContentView(binding.root)
+        val addtoCartViewModel : AddToCartActivityViewModel by viewModels()
+        /*val addtoCartViewModel : AddToCartActivityViewModel by viewModels {
+            AddToCartViewModelFactory((this.application as CodeEngineApplication).prodRepository)
+        }*/
+        val bundle = intent.extras
+        if (bundle!=null ){
+            val productId = bundle.getInt("productId",0)
+            Log.e("Product id is ",""+productId)
+            addtoCartViewModel.getProductDetails(productId)
+
+            val op = CartManager.getCartProductByProductId(productId)
+
+            if(op!=null) {
+                addtoCartViewModel.updateQuantity(op.quantity)
+                //binding.quantity.text = op.quantity.toString()
+
+            }else {
+                addtoCartViewModel.updateQuantity(1)
+                //binding.quantity.text = "1"
+            }
+
+        }else{
+            Log.e("Product id is ","NONE")
+        }
+
+        lifecycleScope.launch{
+            addtoCartViewModel.product.collect {item ->
+
+                item?.let {
+                    binding.image.setImageResource(it.image.toInt())
+                    binding.name.text = it.name
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            addtoCartViewModel.prodQuantity.collect{it ->
+                binding.quantity.text = it.toString()
+            }
+        }
+
+        binding.addItem.setOnClickListener {
+
+            if (SharedPrefs.isAdmin(this)){
+
+
+            var oldQuantity = binding.quantity.text.toString().toInt()
+//            var newQuantity = oldQuantity+1
+            makeLog("<==> ADD ITEM ONCLICK")
+            if (oldQuantity<=0){
+                makeLog("<==> OLD QUANTITY LESS THAN 0")
+                val prod = addtoCartViewModel.product.value
+                if (prod != null && CartManager.Contains(prod)) {
+                    makeLog("<==> PROD NOT NULL AND CONTAIN")
+                    CoroutineScope(Default).launch {
+                        val res = CartManager.RemoveProductFromCart(prod, oldQuantity)
+                        withContext(Main) {
+                            if (res)
+                                binding.quantity.text = oldQuantity.toString()
+                        }
+                    }
+                }else {
+                    makeLog("<==> PROD NULL OR NOT CONTAIN")
+                    makeToast("Quantity cant be zero")
+                }
+            }else{
+                makeLog("<==> IN ELSE CONDITION")
+            val prod =addtoCartViewModel.product.value
+            if (prod!=null) {
+                makeLog("<==> IN NOT NULL")
+                lifecycleScope.launch {
+                    val res = CartManager.AddProductToCart(prod,oldQuantity)
+                    withContext(Main){
+                        makeToast("Product added to Cart")
+                        if (res)
+                            binding.quantity.text = oldQuantity.toString()
+                    }
+                    }
+            }
+
+            }
+            }else{
+                Toast.makeText(this@AddToCartActivity,"Only Manager is allowed to take orders",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        binding.viewCart.setOnClickListener {
+            if (SharedPrefs.isAdmin(this)) {
+                //if (CartManager.orderProducts.value!!.size>0) {
+                    startActivity(Intent(this, ViewCart::class.java))
+                    finish()
+                /*}else{
+                    Toast.makeText(this@AddToCartActivity,"Please add Products in cart first",Toast.LENGTH_SHORT).show();
+                }*/
+            }else{
+                Toast.makeText(this@AddToCartActivity,"Only Manager is allowed to take orders",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        binding.increment.setOnClickListener {
+            var oldQuantity = binding.quantity.text.toString().toInt()
+            var newQuantity = oldQuantity+1
+            binding.quantity.text = newQuantity.toString()
+
+           /* val prod =addtoCartViewModel.getProductLiveData().value
+            if (prod!=null) {
+                CoroutineScope(Default).launch {
+                val res = CartManager.AddProductToCart(prod,newQuantity)
+                    withContext(Main){
+                        makeToast("Addtocart returns "+res)
+                    if (res)
+                    binding.quantity.text = newQuantity.toString()
+                    }
+                }
+            }else{
+                makeToast("Increment not done")
+            }*/
+        }
+
+        binding.decrement.setOnClickListener {
+            var oldQuantity = binding.quantity.text.toString().toInt()
+            if (oldQuantity > 0) {
+                var newQuantity = oldQuantity-1
+                binding.quantity.text = newQuantity.toString()
+
+                /*val prod = addtoCartViewModel.getProductLiveData().value
+                if (prod != null) {
+                    val res = CartManager.RemoveProductFromCart(prod, newQuantity)
+                    if (res)
+                        binding.quantity.text = newQuantity.toString()
+                }*/
+            }else{
+                Toast.makeText(this,"Quantity can not be decremented",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+    }
+
+    fun makeToast(msg:String)
+    {Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()}
+}

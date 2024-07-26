@@ -4,7 +4,7 @@
     package="com.madtitan94.codengineapp" >
 
     <application
-        android:name=".utils.CodeEngineApplication"
+        android:name=".CodeEngineApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,24 +15,24 @@
         android:theme="@style/Theme.CodengineApp"
         tools:targetApi="31" >
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="false" />
 
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".presentation.dashboard.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.CodengineApp.NoActionBar" />
         <activity
-            android:name=".view.activity.ViewCart"
+            android:name=".presentation.viewcart.ViewCart"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.activity.AddToCartActivity"
+            android:name=".presentation.addtocart.AddToCartActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.activity.SplashActivity"
+            android:name=".presentation.splash.SplashActivity"
             android:exported="true"
 
             android:theme="@style/Theme.CodengineApp.NoActionBar" >

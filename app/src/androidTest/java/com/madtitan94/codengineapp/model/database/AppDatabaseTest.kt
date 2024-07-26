@@ -1,17 +1,16 @@
 package com.madtitan94.codengineapp.model.database
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.madtitan94.codengineapp.model.dao.ProductDao
-import com.madtitan94.codengineapp.model.datamodel.Product
+import com.madtitan94.codengineapp.data.data_source.AppDatabase
+import com.madtitan94.codengineapp.data.data_source.ProductDao
+import com.madtitan94.codengineapp.domain.model.Product
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

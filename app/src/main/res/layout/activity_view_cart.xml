@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".view.activity.ViewCart">
+    tools:context=".presentation.viewcart.ViewCart">
 
     <LinearLayout
         android:layout_alignParentTop="true"

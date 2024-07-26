@@ -1,11 +1,11 @@
 package com.madtitan94.codengineapp.di
 
 import android.content.Context
-import com.madtitan94.codengineapp.model.dao.OrderProductDao
-import com.madtitan94.codengineapp.model.dao.ProductDao
-import com.madtitan94.codengineapp.model.dao.TransactionDao
-import com.madtitan94.codengineapp.model.dao.UserDao
-import com.madtitan94.codengineapp.model.database.AppDatabase
+import com.madtitan94.codengineapp.data.data_source.AppDatabase
+import com.madtitan94.codengineapp.data.data_source.OrderProductDao
+import com.madtitan94.codengineapp.data.data_source.ProductDao
+import com.madtitan94.codengineapp.data.data_source.TransactionDao
+import com.madtitan94.codengineapp.data.data_source.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
